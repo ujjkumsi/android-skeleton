@@ -18,17 +18,21 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.network.client
 
-import android.app.Application
+import com.mindfcuk.skeleton.db.entity.Stories
+import retrofit2.http.GET
+import retrofit2.http.Path
+import rx.Observable
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
 
-class SkeletonApplication: Application(){
+interface ApiClient {
+    @GET("https://hacker-news.firebaseio.com/v0/topstories.json")
+    fun getTopStories(): Observable<List<Int>>
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+    @GET("https://hacker-news.firebaseio.com/v0/item/{id}")
+    fun getSingleStory(@Path("id") id: String): Observable<Stories>
 }

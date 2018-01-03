@@ -18,17 +18,48 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.module
 
-import android.app.Application
+import dagger.Provides
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import okhttp3.OkHttpClient
+import com.google.gson.Gson
+import com.mindfcuk.skeleton.di.scope.UserScope
+import dagger.Module
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import com.mindfcuk.skeleton.network.client.ApiClient
+
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
+@UserScope
+@Module
+class ApiModule(internal var baseUrl: String) {
 
-class SkeletonApplication: Application(){
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+    @Provides
+    @UserScope
+    @Named("ApiHttpClient")
+    internal fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .build()
+
+    @Provides
+    @UserScope
+    @Named("ApiRetrofit")
+    fun provideRetrofit(gson: Gson, @Named("ApiHttpClient") okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+
+    @Provides
+    @UserScope
+    fun getApiClient(@Named("ApiRetrofit") retrofit: Retrofit): ApiClient = retrofit.create(ApiClient::class.java)
+
 }

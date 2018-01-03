@@ -18,17 +18,13 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.scope
 
-import android.app.Application
+import javax.inject.Scope
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
 
-class SkeletonApplication: Application(){
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@Scope
+annotation class UserScope

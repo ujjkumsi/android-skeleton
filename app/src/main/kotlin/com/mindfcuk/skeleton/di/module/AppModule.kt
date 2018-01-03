@@ -18,17 +18,52 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.module
 
-import android.app.Application
+import android.content.Context
+import javax.inject.Singleton
+import dagger.Provides
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+import com.mindfcuk.skeleton.SETTINGS
+import com.mindfcuk.skeleton.SkeletonApplication
+import dagger.Module
+import android.arch.persistence.room.Room
+import com.mindfcuk.skeleton.DATABASE
+import com.mindfcuk.skeleton.db.SkeletonDb
+import com.mindfcuk.skeleton.di.scope.UserScope
+
+
+
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
+@Module
+class AppModule(@get:Provides
+                @get:Singleton
+                internal var application: SkeletonApplication) {
 
-class SkeletonApplication: Application(){
+    @Provides
+    @Singleton
+    internal fun provideGson(): Gson = GsonBuilder().create()
 
-    override fun onCreate() {
-        super.onCreate()
+    @Provides
+    @Singleton
+    internal fun providesSharedPreferences(application: SkeletonApplication): SharedPreferences =
+        application.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    internal fun getContext(application: SkeletonApplication): Context = application.applicationContext
+
+    @Provides
+    @UserScope
+    fun getMTDatabase(context: Context): SkeletonDb {
+        return Room.databaseBuilder(context, SkeletonDb::class.java, DATABASE).build()
     }
+
+
 }

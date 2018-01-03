@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright <2018> <Ujjwal Singh, Neeraj Sharma>
+ * Copyright 2018 Ujjwal Singh, Sumit Pareek, Neeraj Sharma
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction, including
@@ -18,15 +18,21 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.di.component
+package com.mindfcuk.skeleton.db.converter
 
-import com.google.gson.Gson
-import android.content.SharedPreferences
-import okhttp3.OkHttpClient
-import javax.inject.Singleton
-
-
+import android.arch.persistence.room.TypeConverter
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
+class IntListConverter {
+    private val delimiter: String = ","
+
+    @TypeConverter
+    fun toList(value: String?): List<Int>? {
+        return value?.split(delimiter)?.map { it.toInt() }
+    }
+
+    @TypeConverter
+    fun toString(value: List<Float>?) = value?.joinToString(delimiter)
+}

@@ -20,15 +20,10 @@
 
 package com.mindfcuk.skeleton
 
-import android.app.Application
-
 /**
  * Created by Ujjwal on 03/01/18.
  */
 
-class SkeletonApplication: Application(){
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+const val SETTINGS = "skeleton_settings"
+const val DATABASE = "skeleton_database"

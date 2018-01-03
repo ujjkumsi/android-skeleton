@@ -18,17 +18,9 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
-
-import android.app.Application
+package com.mindfcuk.skeleton.db
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
-
-class SkeletonApplication: Application(){
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+const val TABLE_STORIES: String = "table_stories"

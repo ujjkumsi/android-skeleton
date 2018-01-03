@@ -18,17 +18,24 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.db.entity
 
-import android.app.Application
+import android.arch.persistence.room.Entity
+import com.mindfcuk.skeleton.db.TABLE_STORIES
+import java.lang.invoke.ConstantCallSite
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
 
-class SkeletonApplication: Application(){
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@Entity(tableName = TABLE_STORIES, primaryKeys = arrayOf("id"))
+class Stories ( var by: String? = null,
+                var descendants: Int = 0,
+                var id: Int = 0,
+                var kids: ArrayList<Int>? = null,
+                var score: Int = 0,
+                var time: Int = 0,
+                var title: String? = null,
+                var type: String? = null,
+                var url: String? = null
+)

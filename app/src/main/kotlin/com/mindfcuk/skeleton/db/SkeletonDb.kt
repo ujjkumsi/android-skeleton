@@ -18,17 +18,20 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.db
 
-import android.app.Application
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
+import com.mindfcuk.skeleton.db.converter.IntListConverter
+import com.mindfcuk.skeleton.db.dao.StoriesDao
+import com.mindfcuk.skeleton.db.entity.Stories
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
-
-class SkeletonApplication: Application(){
-
-    override fun onCreate() {
-        super.onCreate()
-    }
+@Database(entities = arrayOf(Stories::class), version = 1, exportSchema = true)
+@TypeConverters(IntListConverter::class)
+abstract class SkeletonDb : RoomDatabase() {
+    abstract fun storiesDao(): StoriesDao
 }

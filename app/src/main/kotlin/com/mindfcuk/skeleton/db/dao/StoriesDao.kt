@@ -18,17 +18,22 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.db.dao
 
-import android.app.Application
+import android.arch.persistence.room.*
+import com.mindfcuk.skeleton.db.entity.Stories
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
+@Dao
+interface StoriesDao{
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertStories(vararg stories: Stories)
 
-class SkeletonApplication: Application(){
+    @Update
+    fun updateEvalParams(vararg stories: Stories)
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+    @Delete
+    fun deleteEvalParams(vararg stories: Stories)
 }

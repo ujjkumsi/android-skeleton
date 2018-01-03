@@ -18,17 +18,41 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.component
 
-import android.app.Application
+import android.content.Context
+import com.mindfcuk.skeleton.di.module.ApiModule
+import com.mindfcuk.skeleton.di.module.AppModule
+import com.mindfcuk.skeleton.di.scope.UserScope
+import dagger.Component
+import com.google.gson.Gson
+import android.content.SharedPreferences
+import com.mindfcuk.skeleton.SkeletonApplication
+import com.mindfcuk.skeleton.db.SkeletonDb
+import com.mindfcuk.skeleton.network.client.ApiClient
+import okhttp3.OkHttpClient
+import javax.inject.Named
+
 
 /**
  * Created by Ujjwal on 03/01/18.
  */
+@UserScope
+@Component( modules = arrayOf(ApiModule::class, AppModule::class))
+interface APIComponent {
+    @Named("ApiHttpClient")
+    fun okHttpClient(): OkHttpClient
 
-class SkeletonApplication: Application(){
+    fun sharedPreferences(): SharedPreferences
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+    fun getGson(): Gson
+
+    fun getApplication(): SkeletonApplication
+
+    fun getContext(): Context
+
+    fun getDatabase(): SkeletonDb
+
+    fun getApiClient(): ApiClient
+
 }

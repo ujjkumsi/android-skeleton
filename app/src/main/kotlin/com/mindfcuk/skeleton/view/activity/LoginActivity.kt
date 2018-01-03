@@ -18,17 +18,18 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.view.activity
 
-import android.app.Application
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import com.mindfcuk.skeleton.R
 
-/**
- * Created by Ujjwal on 03/01/18.
- */
+class LoginActivity : AppCompatActivity() {
 
-class SkeletonApplication: Application(){
-
-    override fun onCreate() {
-        super.onCreate()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
     }
+
+
 }
