@@ -143,8 +143,8 @@ dependencies {
     }
 
     //lifecycle and LiveData and ViewModel
-    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-    implementation "android.arch.lifecycle:extensions:$lifecycle_ext_version"
-    implementation "android.arch.lifecycle:common-java8:$lifecycle_ext_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_ext_version"
+//    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+//    implementation "android.arch.lifecycle:extensions:$lifecycle_ext_version"
+//    implementation "android.arch.lifecycle:common-java8:$lifecycle_ext_version"
+//    kapt "android.arch.lifecycle:compiler:$lifecycle_ext_version"
 }
