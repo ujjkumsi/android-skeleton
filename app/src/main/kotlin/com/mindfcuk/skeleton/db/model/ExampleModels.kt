@@ -26,6 +26,7 @@ import io.realm.RealmResults
 import io.realm.annotations.Ignore
 import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
+import android.os.Parcel
 
 /**
  * Created by Ujjwal on 18/01/18.

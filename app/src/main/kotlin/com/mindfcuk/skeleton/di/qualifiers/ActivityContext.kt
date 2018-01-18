@@ -18,11 +18,15 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.di.component
+package com.mindfcuk.skeleton.di.qualifiers
+
+import javax.inject.Qualifier
+
+
 
 /**
  * Created by Ujjwal on 18/01/18.
  */
-interface ApiComponent {
-    //provides client
-}
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ActivityContext

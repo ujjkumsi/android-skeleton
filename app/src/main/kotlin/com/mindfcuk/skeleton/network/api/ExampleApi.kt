@@ -18,8 +18,14 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.network.api
+
+import retrofit2.http.GET
+
+
 
 /**
- * Created by Ujjwal on 03/01/18.
+ * Created by Ujjwal on 18/01/18.
  */
+interface ExampleApi {
+}

@@ -18,9 +18,13 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.db
+package com.mindfcuk.skeleton.di.qualifiers
+
+import javax.inject.Qualifier
 
 /**
- * Created by Ujjwal on 03/01/18.
+ * Created by Ujjwal on 18/01/18.
  */
-const val TABLE_STORIES: String = "table_stories"
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AppContext

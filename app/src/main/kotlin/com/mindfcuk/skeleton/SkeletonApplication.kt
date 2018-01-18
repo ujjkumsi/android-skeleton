@@ -21,11 +21,15 @@
 package com.mindfcuk.skeleton
 
 import android.app.Application
+import android.content.res.Resources
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import android.util.Log
+import com.mindfcuk.skeleton.di.component.AppComponent
+import com.mindfcuk.skeleton.di.component.DaggerAppComponent
 import io.realm.Realm
+import com.mindfcuk.skeleton.di.module.AppModule
 
 
 /**
@@ -34,6 +38,10 @@ import io.realm.Realm
 
 class SkeletonApplication: Application(){
 
+    lateinit private var sInstance: SkeletonApplication
+
+    lateinit private var sAppComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
 
@@ -41,12 +49,20 @@ class SkeletonApplication: Application(){
 
         Realm.init(this)
 
+        sInstance = this;
+
+        sAppComponent = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build();
+
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         } else {
             Timber.plant(CrashReportingTree())
         }
     }
+
+
 
     /** A tree which logs important information for crash reporting.  */
     private class CrashReportingTree : Timber.Tree() {
@@ -68,4 +84,12 @@ class SkeletonApplication: Application(){
             }
         }
     }
+
+    fun getInstance(): SkeletonApplication = sInstance
+
+    fun getAppComponent(): AppComponent = sAppComponent
+
+    fun getRealm(): Realm = sAppComponent.realm()
+
+    fun getRes(): Resources =  sInstance.resources
 }

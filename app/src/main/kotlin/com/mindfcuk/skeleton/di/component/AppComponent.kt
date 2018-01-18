@@ -18,12 +18,31 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.component
+
+import android.content.Context
+import android.content.res.Resources
+import com.squareup.leakcanary.RefWatcher
+import com.mindfcuk.skeleton.di.module.AppModule
+import com.mindfcuk.skeleton.di.module.NetModule
+import com.mindfcuk.skeleton.di.qualifiers.AppContext
+import com.mindfcuk.skeleton.di.scope.PerApplication
+import dagger.Component
+import io.realm.Realm
+
 
 /**
- * Created by Ujjwal on 03/01/18.
+ * Created by Ujjwal on 18/01/18.
  */
+@PerApplication
+@Component(modules = arrayOf(AppModule::class, NetModule::class))
+interface AppComponent {
+    @AppContext
+    fun appContext(): Context
 
+    fun resources(): Resources
 
-const val SETTINGS = "skeleton_settings"
-const val DATABASE = "skeleton_database"
+    fun refWatcher(): RefWatcher
+
+    fun realm(): Realm
+}
