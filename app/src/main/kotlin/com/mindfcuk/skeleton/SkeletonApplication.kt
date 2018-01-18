@@ -21,6 +21,12 @@
 package com.mindfcuk.skeleton
 
 import android.app.Application
+import com.facebook.stetho.Stetho
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+import android.util.Log
+import io.realm.Realm
+
 
 /**
  * Created by Ujjwal on 03/01/18.
@@ -30,5 +36,36 @@ class SkeletonApplication: Application(){
 
     override fun onCreate() {
         super.onCreate()
+
+        Stetho.initializeWithDefaults(this)
+
+        Realm.init(this)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        } else {
+            Timber.plant(CrashReportingTree())
+        }
+    }
+
+    /** A tree which logs important information for crash reporting.  */
+    private class CrashReportingTree : Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+                return
+            }
+
+            //TODO Add crashlytics and other library for analytics
+
+            if (t != null) {
+                if(priority == Log.ERROR) {
+                    //add crashlytics
+                }else if (priority == Log.WARN) {
+                    //add crashlytics
+                }else if(priority == Log.INFO){
+                    //add analytics or mixpanel
+                }
+            }
+        }
     }
 }
