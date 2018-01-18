@@ -18,12 +18,12 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton
+package com.mindfcuk.skeleton.di.scope
+import javax.inject.Scope
 
 /**
- * Created by Ujjwal on 03/01/18.
+ * Created by Ujjwal on 18/01/18.
  */
-
-
-const val SETTINGS = "skeleton_settings"
-const val DATABASE = "skeleton_database"
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PerViewHolder
