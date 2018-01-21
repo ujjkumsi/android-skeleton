@@ -18,31 +18,48 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.di.component
+package com.mindfcuk.skeleton.util
 
-import android.content.Context
-import android.content.res.Resources
-import com.squareup.leakcanary.RefWatcher
-import com.mindfcuk.skeleton.di.module.AppModule
-import com.mindfcuk.skeleton.di.module.NetModule
-import com.mindfcuk.skeleton.di.qualifiers.AppContext
-import com.mindfcuk.skeleton.di.scope.PerApplication
-import dagger.Component
-import io.realm.Realm
+import android.os.Parcel
+import android.os.Parcelable
+import org.parceler.Parcels
+import io.realm.RealmObject
+import io.realm.RealmList
+import org.parceler.TypeRangeParcelConverter
+
 
 
 /**
- * Created by Ujjwal on 18/01/18.
+ * Created by Ujjwal on 20/01/18.
  */
-@PerApplication
-@Component(modules = arrayOf(AppModule::class, NetModule::class))
-interface AppComponent {
-    @AppContext
-    fun appContext(): Context?
+class ListParcelPropConverter : TypeRangeParcelConverter<RealmList<out RealmObject>, RealmList<out RealmObject>> {
 
-    fun resources(): Resources?
+    override
+    fun toParcel(input: RealmList<out RealmObject>?, parcel: Parcel) {
+        if (input == null) {
+            parcel.writeInt(NULL)
+        } else {
+            parcel.writeInt(input.size)
+            for (item in input) {
+                parcel.writeParcelable(Parcels.wrap(item), 0)
+            }
+        }
+    }
 
-    fun refWatcher(): RefWatcher
+    override
+    fun fromParcel(parcel: Parcel):  RealmList<out RealmObject> {
+        val size = parcel.readInt()
+        val list = RealmList<RealmObject>()
 
-    fun realm(): Realm
+        for (i in 0 until size) {
+            val parcelable = parcel.readParcelable<Parcelable>(javaClass.classLoader)
+            list.add(Parcels.unwrap<Any>(parcelable) as RealmObject)
+        }
+
+        return list
+    }
+
+    companion object {
+        private val NULL = -1
+    }
 }

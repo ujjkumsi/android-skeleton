@@ -30,6 +30,7 @@ import com.mindfcuk.skeleton.di.component.AppComponent
 import com.mindfcuk.skeleton.di.component.DaggerAppComponent
 import io.realm.Realm
 import com.mindfcuk.skeleton.di.module.AppModule
+import io.reactivex.plugins.RxJavaPlugins
 
 
 /**
@@ -53,13 +54,12 @@ class SkeletonApplication: Application(){
 
         sAppComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
-                .build();
+                .build()
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        } else {
-            Timber.plant(CrashReportingTree())
-        }
+        if (BuildConfig.DEBUG) Timber.plant(DebugTree())
+        else Timber.plant(CrashReportingTree())
+
+        RxJavaPlugins.setErrorHandler(Timber::e)
     }
 
 

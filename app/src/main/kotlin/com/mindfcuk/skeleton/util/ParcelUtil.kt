@@ -18,31 +18,36 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.di.component
+package com.mindfcuk.skeleton.util
 
-import android.content.Context
-import android.content.res.Resources
-import com.squareup.leakcanary.RefWatcher
-import com.mindfcuk.skeleton.di.module.AppModule
-import com.mindfcuk.skeleton.di.module.NetModule
-import com.mindfcuk.skeleton.di.qualifiers.AppContext
-import com.mindfcuk.skeleton.di.scope.PerApplication
-import dagger.Component
-import io.realm.Realm
+import org.parceler.Parcels
+import android.os.Bundle
+import android.os.Parcelable
+import android.support.annotation.NonNull
+import android.support.annotation.Nullable
 
 
 /**
- * Created by Ujjwal on 18/01/18.
+ * Created by Ujjwal on 20/01/18.
  */
-@PerApplication
-@Component(modules = arrayOf(AppModule::class, NetModule::class))
-interface AppComponent {
-    @AppContext
-    fun appContext(): Context?
+object ParcelUtil {
 
-    fun resources(): Resources?
+    /* Gets a Parcelable wrapped with Parceler from a Bundle and returns null
+     * if the bundle does not contain a value for key. */
+    @Nullable
+    fun <T> getParcelable(@NonNull bundle: Bundle, @NonNull key: String): T? {
 
-    fun refWatcher(): RefWatcher
+        return getParcelable<T>(bundle, key, null)
+    }
 
-    fun realm(): Realm
+    /* Gets a Parcelable wrapped with Parceler from a Bundle and returns defaultObject
+     * if the bundle does not contain a value for key. */
+    @NonNull
+    fun <T> getParcelable(@NonNull bundle: Bundle, @NonNull key: String, @NonNull defaultObject: T?): T? {
+        return if (bundle.containsKey(key)) {
+            Parcels.unwrap<T>(bundle.getParcelable<Parcelable>(key))
+        } else {
+            defaultObject
+        }
+    }
 }

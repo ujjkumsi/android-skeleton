@@ -20,12 +20,15 @@
 
 package com.mindfcuk.skeleton.network.api
 
+import com.mindfcuk.skeleton.db.model.Country
 import retrofit2.http.GET
-
+import rx.Single
 
 
 /**
  * Created by Ujjwal on 18/01/18.
  */
 interface ExampleApi {
+    @GET("rest/v1/all")
+    fun getAllCountries(): Single<List<Country>>
 }

@@ -18,7 +18,7 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.view.activity
+package com.mindfcuk.skeleton.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

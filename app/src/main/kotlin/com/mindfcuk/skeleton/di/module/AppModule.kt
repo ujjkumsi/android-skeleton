@@ -32,6 +32,7 @@ import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import dagger.Module
 import io.realm.Realm
+import java.lang.ref.WeakReference
 
 
 /**
@@ -43,14 +44,14 @@ class AppModule(private val mApp: Application) {
     @Provides
     @PerApplication
     @AppContext
-    internal fun provideAppContext(): Context {
-        return mApp
+    internal fun provideAppContext(): Context? {
+        return WeakReference<Context>(mApp).get()
     }
 
     @Provides
     @PerApplication
-    internal fun provideResources(): Resources {
-        return mApp.resources
+    internal fun provideResources(): Resources? {
+        return WeakReference<Resources>(mApp.resources).get()
     }
 
 

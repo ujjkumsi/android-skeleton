@@ -20,13 +20,14 @@
 
 package com.mindfcuk.skeleton.db.model
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.RealmResults
+import com.mindfcuk.skeleton.util.ListParcelPropConverter
+import io.realm.*
 import io.realm.annotations.Ignore
 import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
-import android.os.Parcel
+import org.parceler.Parcel
+import org.parceler.ParcelPropertyConverter
+
 
 /**
  * Created by Ujjwal on 18/01/18.
@@ -66,5 +67,53 @@ open class Person(
     // The Kotlin compiler generates standard getters and setters.
     // Realm will overload them and code inside them is ignored.
     // So if you prefer you can also just have empty abstract methods.
+}
+
+@Parcel(implementations = arrayOf(CountryRealmProxy::class),
+        value = Parcel.Serialization.FIELD,
+        analyze = arrayOf(Country::class))
+open class Country : RealmObject(), Comparable<Country> {
+
+    @PrimaryKey
+    var alpha2Code: String? = null
+    var alpha3Code: String? = null
+    var name: String? = null
+    var nativeName: String? = null
+    var region: String? = null
+    var capital: String? = null
+    @ParcelPropertyConverter(ListParcelPropConverter::class)
+    var currencies: RealmList<RealmString>? = null
+    @ParcelPropertyConverter(ListParcelPropConverter::class)
+    var borders: RealmList<RealmString>? = null
+    @ParcelPropertyConverter(ListParcelPropConverter::class)
+    var languages: RealmList<RealmString>? = null
+    @ParcelPropertyConverter(ListParcelPropConverter::class)
+    var translations: RealmList<RealmStringMapEntry>? = null
+    var population: Int? = null
+    var lat: Float? = null
+    var lng: Float? = null
+
+    override fun compareTo(other: Country): Int {
+        return if (name != null && other.name != null) {
+            name!!.compareTo(other.name!!)
+        } else {
+            0
+        }
+    }
+}
+
+@Parcel(implementations = arrayOf(RealmStringRealmProxy::class),
+        value = Parcel.Serialization.FIELD,
+        analyze = arrayOf(RealmString::class))
+open class RealmString : RealmObject() {
+    var value: String? = null
+}
+
+@Parcel(implementations = arrayOf(RealmStringMapEntryRealmProxy::class),
+        value = Parcel.Serialization.FIELD,
+        analyze = arrayOf(RealmStringMapEntry::class))
+open class RealmStringMapEntry : RealmObject() {
+    var key: String? = null
+    var value: String? = null
 }
 
