@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "865647525272",
+    "firebase_url": "https://skeleton-85890.firebaseio.com",
+    "project_id": "skeleton-85890",
+    "storage_bucket": "skeleton-85890.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865647525272:android:e746030f15033616",
+        "android_client_info": {
+          "package_name": "com.mindfcuk.skeleton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865647525272-rpd4vlnoc2r596kbidbt7vs5r5bn8c3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mindfcuk.skeleton",
+            "certificate_hash": "8185744c3be09ff81b8cec8b4193fe6205def679"
+          }
+        },
+        {
+          "client_id": "865647525272-r96e61obaefjg2r4erphnkp3pudlps76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-3JB7qAwcCRz3WK1zwaO7YdjJ-7f7I74"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865647525272-r96e61obaefjg2r4erphnkp3pudlps76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -181,12 +181,21 @@ dependencies {
     implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
 
     //leak canary
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 
     //parceler
     implementation "org.parceler:parceler-api:$parceler_version"
     kapt "org.parceler:parceler:$parceler_version"
+
+    //firebase
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation "com.google.firebase:firebase-messaging:$firebase_version"
+    implementation "com.google.firebase:firebase-auth:$firebase_version"
+    implementation "com.google.firebase:firebase-config:$firebase_version"
+    implementation "com.google.firebase:firebase-crash:$firebase_version"
+    implementation "com.google.firebase:firebase-appindexing:$firebase_version"
+    implementation "com.google.firebase:firebase-invites:$firebase_version"
 
     //about
     compile('com.mikepenz:aboutlibraries:5.8.1@aar') {
@@ -199,3 +208,5 @@ dependencies {
 //    implementation "android.arch.lifecycle:common-java8:$lifecycle_ext_version"
 //    kapt "android.arch.lifecycle:compiler:$lifecycle_ext_version"
 }
+
+apply plugin: 'com.google.gms.google-services'

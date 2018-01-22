@@ -26,6 +26,7 @@ import com.facebook.stetho.Stetho
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mindfcuk.skeleton.di.component.AppComponent
 import com.mindfcuk.skeleton.di.component.DaggerAppComponent
 import io.realm.Realm
@@ -43,6 +44,8 @@ class SkeletonApplication: Application(){
 
     lateinit private var sAppComponent: AppComponent
 
+    lateinit private var mFirebaseAnalytics: FirebaseAnalytics
+
     override fun onCreate() {
         super.onCreate()
 
@@ -55,6 +58,8 @@ class SkeletonApplication: Application(){
         sAppComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (BuildConfig.DEBUG) Timber.plant(DebugTree())
         else Timber.plant(CrashReportingTree())
