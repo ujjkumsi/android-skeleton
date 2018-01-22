@@ -35,7 +35,7 @@ import org.jetbrains.anko.uiThread
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class LoginActivity : AppCompatActivity() {
+class ExampleRealmActivity : AppCompatActivity() {
 
     private var rootLayout: LinearLayout by Delegates.notNull()
     private var realm: Realm by Delegates.notNull()

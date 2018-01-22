@@ -20,60 +20,25 @@
 
 package com.mindfcuk.skeleton.di.module
 
-import android.app.Application
 import android.content.Context
-import android.content.res.Resources
-import com.mindfcuk.skeleton.BuildConfig
-import com.mindfcuk.skeleton.di.qualifiers.AppContext
-import io.realm.RealmConfiguration
+import com.mindfcuk.skeleton.di.scope.PerActivity
 import dagger.Provides
-import com.mindfcuk.skeleton.di.scope.PerApplication
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
+import com.mindfcuk.skeleton.di.qualifiers.ActivityContext
+import android.support.v7.app.AppCompatActivity
 import dagger.Module
-import io.realm.Realm
 import java.lang.ref.WeakReference
 
 
 /**
- * Created by Ujjwal on 18/01/18.
+ * Created by Ujjwal on 21/01/18.
  */
 @Module
-class AppModule(private val mApp: Application) {
+class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
-    @PerApplication
-    @AppContext
-    internal fun provideAppContext(): Context? {
-        return mApp
+    @PerActivity
+    @ActivityContext
+    internal fun provideActivityContext(): Context? {
+        return mActivity
     }
-
-    @Provides
-    @PerApplication
-    internal fun provideResources(): Resources? {
-        return mApp.resources
-    }
-
-
-    @Provides
-    @PerApplication
-    internal fun provideRefWatcher(): RefWatcher {
-        return LeakCanary.install(mApp)
-    }
-
-    @Provides
-    @PerApplication
-    internal fun provideRealmConfiguration(): RealmConfiguration {
-        var builder = RealmConfiguration.Builder()
-        if (BuildConfig.DEBUG) {
-            builder = builder.deleteRealmIfMigrationNeeded()
-        }
-        return builder.build()
-    }
-
-    @Provides
-    internal fun provideRealm(realmConfiguration: RealmConfiguration): Realm {
-        return Realm.getInstance(realmConfiguration)
-    }
-
 }
