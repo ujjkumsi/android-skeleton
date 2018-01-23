@@ -37,10 +37,10 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "BASE_URL", "\"0987654321\""
+            buildConfigField "String", "BASE_URL", "\"https://restcountries.eu/\""
         }
         release {
-            buildConfigField "String", "BASE_URL", "\"0987654321\""
+            buildConfigField "String", "BASE_URL", "\"https://restcountries.eu/\""
             postprocessing {
                 removeUnusedCode false
                 removeUnusedResources false
@@ -73,6 +73,14 @@ android {
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
