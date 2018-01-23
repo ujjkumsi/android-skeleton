@@ -33,6 +33,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -196,6 +197,9 @@ dependencies {
     implementation "org.parceler:parceler-api:$parceler_version"
     kapt "org.parceler:parceler:$parceler_version"
 
+    //multidex
+    implementation "com.android.support:multidex:$multidex_version"
+
     //firebase
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-messaging:$firebase_version"
@@ -211,10 +215,10 @@ dependencies {
     }
 
     //lifecycle and LiveData and ViewModel
-//    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-//    implementation "android.arch.lifecycle:extensions:$lifecycle_ext_version"
-//    implementation "android.arch.lifecycle:common-java8:$lifecycle_ext_version"
-//    kapt "android.arch.lifecycle:compiler:$lifecycle_ext_version"
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_ext_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_ext_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_ext_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

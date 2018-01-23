@@ -25,7 +25,7 @@ import io.realm.RealmResults
 import javax.inject.Inject
 import android.annotation.SuppressLint
 import com.mindfcuk.skeleton.di.scope.PerApplication
-import com.mindfcuk.skeleton.util.RealmResultObservable
+import com.mindfcuk.skeleton.util.LiveRealmData
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.realm.Realm
@@ -55,14 +55,6 @@ constructor(private val realmProvider: Provider<Realm>) : ExampleRepo {
             } else {
                 realmResults
             }
-        })
-    }
-
-    override fun findAllSortedWithChanges(sortField: String, sort: Sort): Observable<List<Country>> {
-        realmProvider.get().use({ realm ->
-            return RealmResultObservable.from(realm.where(Country::class.java).findAllSortedAsync(sortField, sort))
-                    .filter(RealmResults<Country>::isLoaded)
-                    .map { result -> result }
         })
     }
 

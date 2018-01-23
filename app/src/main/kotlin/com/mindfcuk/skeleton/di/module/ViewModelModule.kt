@@ -18,27 +18,13 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package com.mindfcuk.skeleton.db.repository
+package com.mindfcuk.skeleton.di.module
 
-import android.support.annotation.Nullable
-import com.mindfcuk.skeleton.db.model.Country
-import io.reactivex.Observable
-import io.realm.Sort
+import com.mindfcuk.skeleton.ui.contract.DetailContract.ViewModel
+import dagger.Binds
+import dagger.Module
 
 
 /**
  * Created by Ujjwal on 23/01/18.
  */
-interface ExampleRepo {
-    val favoriteChangeObservable: Observable<String>
-
-    fun findAllSorted(sortField: String, sort: Sort, detached: Boolean): List<Country>
-
-    @Nullable
-    fun getByField(field: String, value: String, detached: Boolean): Country?
-
-    fun save(country: Country)
-    fun delete(country: Country)
-
-    fun detach(country: Country): Country
-}

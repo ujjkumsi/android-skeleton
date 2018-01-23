@@ -29,88 +29,88 @@ import com.mindfcuk.skeleton.di.component.ActivityComponent
 import com.squareup.leakcanary.RefWatcher
 import javax.inject.Inject
 import android.support.v7.app.AppCompatActivity
-import com.mindfcuk.skeleton.BR
 import io.realm.Realm
 
 
 /**
  * Created by Ujjwal on 22/01/18.
  */
-abstract class BaseActivity<B : ViewDataBinding, V : MvvmViewModel> : AppCompatActivity() {
-
-
-    // Inject a Realm instance into every Activity, since the instance
-    // is cached and reused for a thread (avoids create/destroy overhead)
-    @Inject protected var realm: Realm? = null
-
-    protected var binding: B? = null
-    @Inject protected var viewModel: V? = null
-
-    @Inject protected var refWatcher: RefWatcher? = null
-
-    private var mActivityComponent: ActivityComponent? = null
-
-    @CallSuper
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        viewModel?.saveInstanceState(outState)
-    }
-
-    @CallSuper
-    override fun onDestroy() {
-        super.onDestroy()
-        refWatcher?.watch(mActivityComponent)
-        refWatcher?.watch(viewModel)
-        viewModel?.detachView()
-        binding = null
-        viewModel = null
-        mActivityComponent = null
-        realm?.close()
-    }
-
-    protected fun activityComponent(): ActivityComponent {
-        if (mActivityComponent == null) {
-            mActivityComponent = DaggerActivityComponent.builder()
-                    .activityModule(ActivityModule(this))
-                    .appComponent(CountriesApp.getAppComponent())
-                    .build()
-        }
-        return mActivityComponent
-
-    }
-
-    /* Sets the content view, creates the binding and attaches the view to the view model */
-    protected fun setAndBindContentView(@Nullable savedInstanceState: Bundle, @LayoutRes layoutResID: Int) {
-        if (viewModel == null) {
-            throw IllegalStateException("viewModel must already be set via injection")
-        }
-        binding = DataBindingUtil.setContentView(this, layoutResID)
-        binding?.setVariable(BR.vm, viewModel)
-
-        try {
-
-            viewModel!!.attachView(this as MvvmView, savedInstanceState)
-        } catch (e: ClassCastException) {
-            if (viewModel !is NoOpViewModel) {
-                throw RuntimeException(javaClass.simpleName + " must implement MvvmView subclass as declared in " + viewModel!!.getClass().getSimpleName())
-            }
-        }
-
-    }
-
-    fun dimen(@DimenRes resId: Int): Int {
-        return resources.getDimension(resId).toInt()
-    }
-
-    fun color(@ColorRes resId: Int): Int {
-        return resources.getColor(resId)
-    }
-
-    fun integer(@IntegerRes resId: Int): Int {
-        return resources.getInteger(resId)
-    }
-
-    fun string(@StringRes resId: Int): String {
-        return resources.getString(resId)
-    }
-}
+//abstract class BaseActivity<B : ViewDataBinding, V : MvvmViewModel> : AppCompatActivity() {
+//
+//
+//    // Inject a Realm instance into every Activity, since the instance
+//    // is cached and reused for a thread (avoids create/destroy overhead)
+//    @Inject protected var realm: Realm? = null
+//
+//    protected var binding: B? = null
+//
+//    @Inject protected var viewModel: V? = null
+//
+//    @Inject protected var refWatcher: RefWatcher? = null
+//
+//    private var mActivityComponent: ActivityComponent? = null
+//
+//    @CallSuper
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        super.onSaveInstanceState(outState)
+//        viewModel?.saveInstanceState(outState)
+//    }
+//
+//    @CallSuper
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        refWatcher?.watch(mActivityComponent)
+//        refWatcher?.watch(viewModel)
+//        viewModel?.detachView()
+//        binding = null
+//        viewModel = null
+//        mActivityComponent = null
+//        realm?.close()
+//    }
+//
+//    protected fun activityComponent(): ActivityComponent {
+//        if (mActivityComponent == null) {
+//            mActivityComponent = DaggerActivityComponent.builder()
+//                    .activityModule(ActivityModule(this))
+//                    .appComponent(CountriesApp.getAppComponent())
+//                    .build()
+//        }
+//        return mActivityComponent
+//
+//    }
+//
+//    /* Sets the content view, creates the binding and attaches the view to the view model */
+//    protected fun setAndBindContentView(@Nullable savedInstanceState: Bundle, @LayoutRes layoutResID: Int) {
+//        if (viewModel == null) {
+//            throw IllegalStateException("viewModel must already be set via injection")
+//        }
+//        binding = DataBindingUtil.setContentView(this, layoutResID)
+//        binding?.setVariable(BR.vm, viewModel)
+//
+//        try {
+//
+//            viewModel!!.attachView(this as MvvmView, savedInstanceState)
+//        } catch (e: ClassCastException) {
+//            if (viewModel !is NoOpViewModel) {
+//                throw RuntimeException(javaClass.simpleName + " must implement MvvmView subclass as declared in " + viewModel!!.getClass().getSimpleName())
+//            }
+//        }
+//
+//    }
+//
+//    fun dimen(@DimenRes resId: Int): Int {
+//        return resources.getDimension(resId).toInt()
+//    }
+//
+//    fun color(@ColorRes resId: Int): Int {
+//        return resources.getColor(resId)
+//    }
+//
+//    fun integer(@IntegerRes resId: Int): Int {
+//        return resources.getInteger(resId)
+//    }
+//
+//    fun string(@StringRes resId: Int): String {
+//        return resources.getString(resId)
+//    }
+//}

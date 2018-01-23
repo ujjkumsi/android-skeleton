@@ -22,6 +22,7 @@ package com.mindfcuk.skeleton
 
 import android.app.Application
 import android.content.res.Resources
+import android.support.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -38,13 +39,7 @@ import io.reactivex.plugins.RxJavaPlugins
  * Created by Ujjwal on 03/01/18.
  */
 
-class SkeletonApplication: Application(){
-
-    lateinit private var sInstance: SkeletonApplication
-
-    lateinit private var sAppComponent: AppComponent
-
-    lateinit private var mFirebaseAnalytics: FirebaseAnalytics
+class SkeletonApplication: MultiDexApplication(){
 
     override fun onCreate() {
         super.onCreate()
@@ -53,7 +48,7 @@ class SkeletonApplication: Application(){
 
         Realm.init(this)
 
-        sInstance = this;
+        sInstance = this
 
         sAppComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
@@ -90,11 +85,21 @@ class SkeletonApplication: Application(){
         }
     }
 
-    fun getInstance(): SkeletonApplication = sInstance
+    companion object {
 
-    fun getAppComponent(): AppComponent = sAppComponent
+        lateinit private var sInstance: SkeletonApplication
 
-    fun getRealm(): Realm = sAppComponent.realm()
+        lateinit private var sAppComponent: AppComponent
 
-    fun getRes(): Resources =  sInstance.resources
+        lateinit private var mFirebaseAnalytics: FirebaseAnalytics
+
+        fun getInstance(): SkeletonApplication = sInstance
+
+        fun getAppComponent(): AppComponent = sAppComponent
+
+        fun getRealm(): Realm = sAppComponent.realm()
+
+        fun getRes(): Resources =  sInstance.resources
+    }
+
 }

@@ -20,31 +20,25 @@
 
 package com.mindfcuk.skeleton.util
 
-import io.reactivex.Observable
 import io.realm.RealmResults
 import io.realm.RealmChangeListener
-import io.reactivex.ObservableEmitter
-import io.realm.RealmObject
-import io.reactivex.ObservableOnSubscribe
-
-
+import android.arch.lifecycle.LiveData
+import io.realm.RealmModel
 
 /**
  * Created by Ujjwal on 23/01/18.
  */
-class RealmResultObservable<T : RealmObject> private constructor(private val realmResults: RealmResults<T>) : ObservableOnSubscribe<RealmResults<T>> {
 
-    @Throws(Exception::class)
-    override fun subscribe(emitter: ObservableEmitter<RealmResults<T>>) {
-        val changeListener = RealmChangeListener<RealmResults<T>> { emitter.onNext(it) }
-        realmResults.addChangeListener(changeListener)
-        emitter.setCancellable { realmResults.removeChangeListener(changeListener) }
+
+class LiveRealmData<T : RealmModel>(private val results: RealmResults<T>) : LiveData<RealmResults<T>>() {
+    private val listener = RealmChangeListener<RealmResults<T>> { results -> value = results }
+
+    override fun onActive() {
+        results.addChangeListener(listener)
     }
 
-    companion object {
-
-        fun <T : RealmObject> from(realmResults: RealmResults<T>): Observable<RealmResults<T>> {
-            return Observable.create(RealmResultObservable(realmResults))
-        }
+    override fun onInactive() {
+        results.removeChangeListener(listener)
     }
 }
+
